@@ -53,6 +53,9 @@ def aspect_scale(img, bx, by):
 # Rescales the board sprite without making it looked smooshed or stretched
 board = aspect_scale(board, 700, 700)
 
+# Create instance of board display
+block1 = pygame.image.load(NUM_2_BLOCK[1])
+
 # Board is (381 W X 700 H) after scaling
 # Board is (20 H X 10 W)
 
@@ -69,6 +72,9 @@ while True:
     # Map the pixels of the board sprite onto the screen
     # Map towards the center of the screen
     screen.blit(board, (321,30))
+
+    block1 = aspect_scale(block1, 120, 120)
+    screen.blit(block1, (321,30))
 
     # Actually display the entire screen once all the pixels have been mapped
     pygame.display.flip()
