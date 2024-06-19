@@ -76,7 +76,6 @@ class Block:
     def aspect_scale(self,img, bx, by):
         """ Scales 'img' to fit into box bx/by.
         This method will retain the original image's aspect ratio """
-        print(bx,by)
         ix,iy = img.get_size()
         if ix > iy:
             # fit to width
