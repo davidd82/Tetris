@@ -6,6 +6,9 @@ pygame.init()
 # Set screen size of the window for the tetris game
 screen = pygame.display.set_mode((1024, 768))
 
+# Get clock of the game
+clock = pygame.time.Clock()
+
 # black color code
 black = 0, 0, 0
 
@@ -51,11 +54,12 @@ def aspect_scale(img, bx, by):
 
     return pygame.transform.scale(img, (sx,sy))
 
-# Rescales the board sprite without making it looked smooshed or stretched
-board = aspect_scale(board, 700, 700)
+# Rescales the board sprite without making it look smooshed or stretched
+board = aspect_scale(board, 750, 750)
 
 # Create instance of block
-block1 = block.Block(NUM_2_BLOCK[7])
+block_num = 3
+block1 = block.Block(NUM_2_BLOCK[block_num], block_num)
 
 # Board is (381 W X 700 H) after scaling
 # Board is (20 H X 10 W)
@@ -67,6 +71,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
+    # Get a random number to choose next block
     ran = random.randrange(1, 7)
 
     # Fill the screen with black
@@ -74,10 +79,13 @@ while True:
 
     # Map the pixels of the board sprite onto the screen
     # Map towards the center of the screen
-    screen.blit(board, (321,30))
+    screen.blit(board, (321,10))
 
+    # Draw the current block
     block1.draw_block(screen)
 
     # Actually display the entire screen once all the pixels have been mapped
     pygame.display.flip()
+
+    clock.tick(1)
 
