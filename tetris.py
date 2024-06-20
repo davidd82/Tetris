@@ -80,14 +80,70 @@ while True:
     
     # Checks if a button has been pressed
     keys=pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]: # Move block left if allowed (enough time has passed)
+    # Move block DOWN and RIGHT and ROTATE
+    if keys[pygame.K_DOWN] and keys[pygame.K_RIGHT] and keys[pygame.K_z]: 
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_fall(screen)
+            block1.block_right(screen)
+            block1.block_rotate(screen)
+    # Move block DOWN and LEFT and ROTATE
+    elif keys[pygame.K_DOWN] and keys[pygame.K_LEFT] and keys[pygame.K_z]:
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_fall(screen)
+            block1.block_left(screen)
+            block1.block_rotate(screen)
+    # Move block DOWN and RIGHT
+    elif keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]: 
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_fall(screen)
+            block1.block_right(screen)
+    # Move block DOWN and LEFT
+    elif keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_fall(screen)
+            block1.block_left(screen)
+    # Move block DOWN and ROTATE
+    elif keys[pygame.K_DOWN] and keys[pygame.K_z]:
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_fall(screen)
+            block1.block_rotate(screen)
+    # Move block RIGHT and ROTATE
+    elif keys[pygame.K_RIGHT] and keys[pygame.K_z]: 
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_right(screen)
+            block1.block_rotate(screen)
+    # Move block LEFT and ROTATE
+    elif keys[pygame.K_LEFT] and keys[pygame.K_z]: 
+        if move_ticker <= 0:   
+            move_ticker = 5
+            block1.block_left(screen)
+            block1.block_rotate(screen)
+    # Move block LEFT
+    elif keys[pygame.K_LEFT]:
         if move_ticker <= 0:
             move_ticker = 15
             block1.block_left(screen)
-    if keys[pygame.K_RIGHT]: # Move block right if allowed (enough time has passed)
+    # Move block RIGHT
+    elif keys[pygame.K_RIGHT]: 
         if move_ticker <= 0:   
             move_ticker = 15
             block1.block_right(screen)
+    # Move block DOWN
+    elif keys[pygame.K_DOWN]: 
+        if move_ticker <= 0:   
+            move_ticker = 3
+            block1.block_fall(screen)
+    # ROTATE block
+    elif keys[pygame.K_z]: 
+        if move_ticker <= 0:   
+            move_ticker = 10
+            block1.block_rotate(screen)
 
     # Get a random number to choose next block
     ran = random.randrange(1, 7)

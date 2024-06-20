@@ -82,6 +82,25 @@ class Block:
         self.rect = self.rect.move(34,0)
         screen.blit(self.image,self.rect)
 
+    # Rotates the block 90 degrees
+    def block_rotate(self,screen):
+        # Store the current position of rect
+        y = self.rect.y
+        x = self.rect.x
+
+        # Rotate the image and update
+        self.image = pygame.transform.rotate(self.image, 90)
+
+        # Get the rect of updated/rotated image
+        self.rect = self.image.get_rect()
+
+        # Set the position of this new rect to the position of the old rect
+        self.rect.y = y
+        self.rect.x = x
+
+        # Map the pixels
+        screen.blit(self.image,self.rect)
+
     # Scales the passed image to the pixel size while maintaining the aspect ratio
     def aspect_scale(self,img, bx, by):
         """ Scales 'img' to fit into box bx/by.
