@@ -48,7 +48,7 @@ class Block:
             self.rect.y = 11
             self.rect.x = 492
         elif (self.block_num == 3):
-            self.rect.y = 11
+            self.rect.y = 45
             self.rect.x = 492
         elif (self.block_num == 4):
             self.rect.y = 11
@@ -65,12 +65,22 @@ class Block:
 
     # Handles drawing the block onto the screen
     def draw_block(self, screen):
-        self.rect = self.block_fall()
         screen.blit(self.image, self.rect)
 
     # Move the rect box of the block 34 pixels down
-    def block_fall(self):
-        return self.rect.move(0, 34)
+    def block_fall(self,screen):
+        self.rect = self.rect.move(0, 34)
+        screen.blit(self.image,self.rect)
+    
+    # Move the rect box of the block 34 pixels to the left
+    def block_left(self,screen):
+        self.rect = self.rect.move(-34,0)
+        screen.blit(self.image,self.rect)
+
+    # Move the rect box of the block 34 pixels to the right
+    def block_right(self,screen):
+        self.rect = self.rect.move(34,0)
+        screen.blit(self.image,self.rect)
 
     # Scales the passed image to the pixel size while maintaining the aspect ratio
     def aspect_scale(self,img, bx, by):

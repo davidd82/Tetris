@@ -58,11 +58,18 @@ def aspect_scale(img, bx, by):
 board = aspect_scale(board, 750, 750)
 
 # Create instance of block
-block_num = 1
+block_num = 3
 block1 = block.Block(NUM_2_BLOCK[block_num], block_num)
 
 # Board is (381 W X 700 H) after scaling
 # Board is (20 H X 10 W)
+
+# count is used to control speed of fall
+# Allows for higher fps for checking user input
+count = 0
+
+# Controls movement speed of block from user input (not too fast and not too slow)
+move_ticker = 0
 
 # Main game loop
 while True:
@@ -70,6 +77,17 @@ while True:
     # QUIT the game if the X in the window is clicked
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
+    
+    # Checks if a button has been pressed
+    keys=pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]: # Move block left if allowed (enough time has passed)
+        if move_ticker <= 0:
+            move_ticker = 15
+            block1.block_left(screen)
+    if keys[pygame.K_RIGHT]: # Move block right if allowed (enough time has passed)
+        if move_ticker <= 0:   
+            move_ticker = 15
+            block1.block_right(screen)
 
     # Get a random number to choose next block
     ran = random.randrange(1, 7)
@@ -84,8 +102,21 @@ while True:
     # Draw the current block
     block1.draw_block(screen)
 
+    # Drop the block at given speed
+    if(count >= 60):
+        block1.block_fall(screen)
+        count = 0
+
+    # Update the time until next user input is allowed
+    if move_ticker > 0:
+        move_ticker -= 1
+
+    # Update the time until next block drop
+    count += 1
+
     # Actually display the entire screen once all the pixels have been mapped
     pygame.display.flip()
 
-    clock.tick(1)
+    # Game runs at 60 fps
+    clock.tick(60) #200
 
