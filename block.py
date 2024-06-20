@@ -42,25 +42,25 @@ class Block:
         # Place the block at top and center of board
         # Different coordinate depending on the type of block
         if (self.block_num == 1):
-            self.rect.y = 11
+            self.rect.y = 45
             self.rect.x = 492
         elif (self.block_num == 2):
-            self.rect.y = 11
+            self.rect.y = 45
             self.rect.x = 492
         elif (self.block_num == 3):
             self.rect.y = 45
             self.rect.x = 492
         elif (self.block_num == 4):
-            self.rect.y = 11
+            self.rect.y = 45
             self.rect.x = 492
         elif (self.block_num == 5):
-            self.rect.y = 11
+            self.rect.y = 45
             self.rect.x = 492
         elif (self.block_num == 6):
-            self.rect.y = 12
+            self.rect.y = 46
             self.rect.x = 493
         elif (self.block_num == 7):
-            self.rect.y = 11
+            self.rect.y = 45
             self.rect.x = 492
 
     # Handles drawing the block onto the screen

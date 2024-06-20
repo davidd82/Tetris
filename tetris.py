@@ -58,7 +58,7 @@ def aspect_scale(img, bx, by):
 board = aspect_scale(board, 750, 750)
 
 # Create instance of block
-block_num = 3
+block_num = 7
 block1 = block.Block(NUM_2_BLOCK[block_num], block_num)
 
 # Board is (381 W X 700 H) after scaling
