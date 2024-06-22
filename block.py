@@ -18,7 +18,8 @@ class Block:
         for i in range (4):
             self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 1
 
-        self.out_of_bounds = False
+        self.out_of_bounds_down = False
+        self.out_of_bounds_left = False
 
         # Scale the block depending on which block it is
         if (self.block_num == 1):
@@ -80,7 +81,7 @@ class Block:
     # Move the rect box of the block 34 pixels down
     def block_fall(self,screen):
         # Checks if the block is out of bounds
-        if (self.out_of_bounds == False):
+        if (self.out_of_bounds_down == False):
             # Update the state of the board using mini_coord
             # Place that block is leaving will become unoccupied
             for i in range (4):
@@ -95,11 +96,11 @@ class Block:
 
                 # Check if the shape went out of bounds
                 if (self.mini_coord[i][1] == 20):
-                    self.out_of_bounds = True
+                    self.out_of_bounds_down = True
             
             # Update the state of the board using mini_coord
             # Place that block is arriving will become occupied
-            if (self.out_of_bounds == False):
+            if (self.out_of_bounds_down == False):
                 for i in range (4):
                     self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 1
 
@@ -108,8 +109,32 @@ class Block:
         
     # Move the rect box of the block 34 pixels to the left
     def block_left(self,screen):
-        self.rect = self.rect.move(-34,0)
-        screen.blit(self.image,self.rect)
+        # Checks if the block is out of bounds
+        if (self.out_of_bounds_left == False):
+        # Update the state of the board using mini_coord
+            # Place that block is leaving will become unoccupied
+            for i in range (4):
+                self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 0
+
+            # Update the coordinate of the mini blocks to go one col left
+            for i in range (4):
+                # Workaround to update a tuple by converting it to list
+                self.temp = list(self.mini_coord[i])
+                self.temp[0] -= 1
+                self.mini_coord[i] = tuple(self.temp)
+
+                # Check if the shape went out of bounds
+                if (self.mini_coord[i][0] == 0):
+                    self.out_of_bounds_left = True
+            
+            # Update the state of the board using mini_coord
+            # Place that block is arriving will become occupied
+            if (self.out_of_bounds_left == False):
+                for i in range (4):
+                    self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 1
+
+            self.rect = self.rect.move(-34,0)
+            screen.blit(self.image,self.rect)
 
     # Move the rect box of the block 34 pixels to the right
     def block_right(self,screen):
