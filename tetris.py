@@ -1,6 +1,8 @@
 import sys, pygame
 import block
 import random
+import numpy as np 
+
 pygame.init()
 
 # Set screen size of the window for the tetris game
@@ -54,12 +56,15 @@ def aspect_scale(img, bx, by):
 
     return pygame.transform.scale(img, (sx,sy))
 
+# Sets size of 2D array
+state = np.zeros((10,20))
+
 # Rescales the board sprite without making it look smooshed or stretched
 board = aspect_scale(board, 750, 750)
 
 # Create instance of block
 block_num = 7
-block1 = block.Block(NUM_2_BLOCK[block_num], block_num)
+block1 = block.Block(NUM_2_BLOCK[block_num], block_num, state)
 
 # Board is (381 W X 700 H) after scaling
 # Board is (20 H X 10 W)
@@ -70,6 +75,8 @@ count = 0
 
 # Controls movement speed of block from user input (not too fast and not too slow)
 move_ticker = 0
+
+
 
 # Main game loop
 while True:

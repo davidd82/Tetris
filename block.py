@@ -3,12 +3,22 @@ import pygame
 pygame.init()
 
 class Block:
-    def __init__(self, file, block_num):
+    def __init__(self, file, block_num, state):
         # Load the image from the given file
         self.image = pygame.image.load(file)
 
         # Store block num
         self.block_num = block_num
+
+        # Stores the coordinates of the mini blocks
+        self.mini_coord = [(4,0), (5,0), (5,1), (6,1)] # RED Z
+
+        # Update the state of the board using mini_coord
+        self.state = state
+        for i in range (4):
+            self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 1
+
+        self.out_of_bounds = False
 
         # Scale the block depending on which block it is
         if (self.block_num == 1):
@@ -69,9 +79,33 @@ class Block:
 
     # Move the rect box of the block 34 pixels down
     def block_fall(self,screen):
-        self.rect = self.rect.move(0, 34)
-        screen.blit(self.image,self.rect)
-    
+        # Checks if the block is out of bounds
+        if (self.out_of_bounds == False):
+            # Update the state of the board using mini_coord
+            # Place that block is leaving will become unoccupied
+            for i in range (4):
+                self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 0
+
+            # Update the coordinate of the mini blocks to go one row down
+            for i in range (4):
+                # Workaround to update a tuple by converting it to list
+                self.temp = list(self.mini_coord[i])
+                self.temp[1] += 1
+                self.mini_coord[i] = tuple(self.temp)
+
+                # Check if the shape went out of bounds
+                if (self.mini_coord[i][1] == 20):
+                    self.out_of_bounds = True
+            
+            # Update the state of the board using mini_coord
+            # Place that block is arriving will become occupied
+            if (self.out_of_bounds == False):
+                for i in range (4):
+                    self.state[self.mini_coord[i][0]][self.mini_coord[i][1]] = 1
+
+                self.rect = self.rect.move(0, 34)
+                screen.blit(self.image,self.rect)
+        
     # Move the rect box of the block 34 pixels to the left
     def block_left(self,screen):
         self.rect = self.rect.move(-34,0)
